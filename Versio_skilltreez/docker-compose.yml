@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # Database
+  db:
+    image: postgres:14-alpine
+    container_name: gamechane_db
+    restart: always
+    environment:
+      POSTGRES_DB: gamechane
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secure_root_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 128M # Ultra-tight limit
+    networks:
+      - gamechane_net
+
+  # Backend (Spring Boot)
+  backend:
+    build: ./backend
+    container_name: gamechane_backend
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/gamechane
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-secure_root_password}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      # Super aggressive Java Memory Tuning for 1GB VPS
+      JAVA_OPTS: "-Xms128m -Xmx256m -XX:+UseSerialGC -Xss512k -XX:MaxRAM=256m"
+    depends_on:
+      - db
+    deploy:
+      resources:
+        limits:
+          memory: 350M
+    networks:
+      - gamechane_net
+
+  # Frontend (Nginx)
+  frontend:
+    build: ./frontend
+    container_name: gamechane_frontend
+    restart: always
+    ports:
+      - "8090:80"
+    depends_on:
+      - backend
+    deploy:
+      resources:
+        limits:
+          memory: 32M
+    networks:
+      - gamechane_net
+
+volumes:
+  postgres_data:
+
+networks:
+  gamechane_net:
+    driver: bridge

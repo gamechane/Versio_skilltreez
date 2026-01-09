@@ -1,0 +1,57 @@
+/* This file contains the global styling of the project with css variables */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+:root {
+  --font-family: "Inter", sans-serif;
+  --header-font-family: "Playfair Display", sans-serif;
+  --font-size: 14px;
+
+  --secondary-background: #EAFBEA;
+  --background: #ffffff;
+  --foreground: #000227;
+
+  --offwhite: #eafbea;
+
+  --primary-light: #a1eba1;
+  --primary: #42d742;
+  --primary-dark: #216c21;
+
+  --secondary-light: #cbf4cb;
+  --secondary: #96e996;
+  --secondary-dark: #4b754b;
+
+  --dark: #333333;
+  --light-gray: #888888;
+  --light: #f4f4f4;
+}
+
+.text-xs {
+  font-size: 0.75rem; /* 12px */
+  line-height: 1rem; /* 16px */
+  margin: 0;
+}
+
+.text-sm {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+  margin: 2px;
+}
+
+.text-base {
+  font-size: 1rem; /* 16px */
+  line-height: 1.5rem; /* 24px */
+  margin: 2px;
+}
+
+.text-lg {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.75rem; /* 28px */
+  margin: 5px;
+}
+
+.text-xl {
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.75rem; /* 28px */
+  margin: 5px;
+}

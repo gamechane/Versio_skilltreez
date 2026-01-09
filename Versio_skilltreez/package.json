@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "interactjs": "^1.10.27",
+    "jsplumb": "^2.15.6"
+  }
+}

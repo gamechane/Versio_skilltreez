@@ -1,0 +1,16 @@
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+platform.iml
+target/
+*.iml
+node/
+public/
+src/http-commons.js
+frontend/dist/
+backend/src/main/resources/application.properties
+/gamemaster_frontend/node_modules
