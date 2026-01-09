@@ -1,0 +1,33 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            # We gaan naar de map waar we de repo gekloond hebben
+            # Let op: we noemden de hoofdmap 'source' op de server
+            cd /opt/skilltreez/source/Versio_skilltreez
+            
+            # Haal de nieuwste code op
+            git pull origin main
+            
+            # Zet wachtwoord vers in .env (optioneel, maar wel zo veilig)
+            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" > .env
+            
+            # Herbouw en herstart
+            docker-compose up -d --build --remove-orphans
+            
+            # Ruim op
+            docker image prune -f
