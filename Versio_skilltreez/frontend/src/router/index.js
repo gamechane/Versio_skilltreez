@@ -15,10 +15,11 @@ import SelectionGame from "@/views/game/selection/SelectionGame.vue";
 import GameResultView from "@/views/game/GameResultView.vue";
 import SkillTreeCompletedView from "@/views/skilltree/SkillTreeCompletedView.vue";
 import CreateInformationCard from "@/views/game/information/CreateInformationCard.vue";
-import {AuthenticationService} from "@/services/authentication.js";
+import { AuthenticationService } from "@/services/authentication.js";
 import EditPasswordView from "@/views/user/profile/EditPasswordView.vue";
 import MoreInformationView from "@/views/MoreInformationView.vue";
 import CreateAnswerGame from "@/views/game/answer/CreateAnswerGame.vue";
+import AdminView from "@/views/user/AdminView.vue";
 import CreateRankingGame from "@/views/game/ranking/CreateRankingGame.vue";
 import CreateRankingGameSettings from "@/views/game/ranking/CreateRankingGameSettings.vue";
 import RankingGame from "@/views/game/ranking/RankingGame.vue";
@@ -367,6 +368,15 @@ const router = createRouter({
       meta: {
         auth: true,
         title: "More information" + APP_NAME_SUFFIX + APP_NAME
+      }
+    },
+    {
+      path: "/admin",
+      name: "Admin",
+      component: AdminView,
+      meta: {
+        auth: true,
+        title: "Admin" + APP_NAME_SUFFIX + APP_NAME
       }
     },
   ],

@@ -50,6 +50,14 @@ const dashboardCards = [
     },
     allowedRoles: ["ADMIN", "GAME_MASTER", "STUDENT"],
   },
+  {
+    icon: profileIcon,
+    buttonText: "Admin",
+    roleLinks: {
+      adminLink: "/admin",
+    },
+    allowedRoles: ["ADMIN"],
+  },
 ]
 
 const token = DataManager.token.get();

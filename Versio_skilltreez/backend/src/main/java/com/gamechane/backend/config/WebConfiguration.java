@@ -14,10 +14,22 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         String[] origins = allowedOrigins.split(",");
-        registry.addMapping("/api/**")
-                .allowedOrigins(origins)
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*")
-                .allowCredentials(true);
+
+        // If wildcard is used, we cannot use allowCredentials(true)
+        boolean useCredentials = !allowedOrigins.equals("*");
+
+        if (allowedOrigins.equals("*")) {
+            registry.addMapping("/api/**")
+                    .allowedOriginPatterns("*")
+                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                    .allowedHeaders("*")
+                    .allowCredentials(true);
+        } else {
+            registry.addMapping("/api/**")
+                    .allowedOrigins(origins)
+                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                    .allowedHeaders("*")
+                    .allowCredentials(true);
+        }
     }
 }

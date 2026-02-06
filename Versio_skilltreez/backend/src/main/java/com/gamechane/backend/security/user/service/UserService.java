@@ -30,10 +30,12 @@ public class UserService implements UserDetailsService {
         bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
-    public UserDTO saveUser(String username, String emailAddress, String password, String role) throws BadRequestException {
+    public UserDTO saveUser(String username, String emailAddress, String password, String role)
+            throws BadRequestException {
         User user = new User(username, emailAddress, password);
 
-        switch (role.trim().toUpperCase()) { // Keep it a switch statement, because there might be more roles in the future
+        switch (role.trim().toUpperCase()) { // Keep it a switch statement, because there might be more roles in the
+                                             // future
             case "DOCENT":
                 user.addRole(Role.GAME_MASTER_FREE);
                 break;
@@ -42,7 +44,8 @@ public class UserService implements UserDetailsService {
                 break;
         }
 
-        //beveilig het wachtwoord door het te hashen met een encoder, zodat het niet letterlijk in de database opgeslagen staat
+        // beveilig het wachtwoord door het te hashen met een encoder, zodat het niet
+        // letterlijk in de database opgeslagen staat
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         UserDTO savedUser;
 
@@ -50,7 +53,9 @@ public class UserService implements UserDetailsService {
             savedUser = ObjectMapperUtils.map(userRepository.save(user), UserDTO.class);
             savedUser.clearPassword();
         } catch (Exception e) {
-            throw new BadRequestException(String.format("There already exists an user with the following username: '%s' or email address: '%s'.", username, emailAddress));
+            throw new BadRequestException(String.format(
+                    "There already exists an user with the following username: '%s' or email address: '%s'.", username,
+                    emailAddress));
         }
 
         return savedUser;
@@ -59,7 +64,8 @@ public class UserService implements UserDetailsService {
     public UserDTO createUser(UserDTO userDTO) throws BadRequestException {
         User user = ObjectMapperUtils.map(userDTO, User.class);
 
-        //beveilig het wachtwoord door het te hashen met een encoder, zodat het niet letterlijk in de database opgeslagen staat
+        // beveilig het wachtwoord door het te hashen met een encoder, zodat het niet
+        // letterlijk in de database opgeslagen staat
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         UserDTO savedUser;
 
@@ -67,14 +73,16 @@ public class UserService implements UserDetailsService {
             savedUser = ObjectMapperUtils.map(userRepository.save(user), UserDTO.class);
             savedUser.clearPassword();
         } catch (Exception e) {
-            throw new BadRequestException(String.format("There already exists an user with the following username: '%s' or email address: '%s'.", userDTO.getUsername(), userDTO.getEmailAddress()));
+            throw new BadRequestException(String.format(
+                    "There already exists an user with the following username: '%s' or email address: '%s'.",
+                    userDTO.getUsername(), userDTO.getEmailAddress()));
         }
 
         return savedUser;
     }
 
     /*
-    Vind alle gebruikers
+     * Vind alle gebruikers
      */
     public List<UserDTO> findAllUsers() {
         List<UserDTO> userDTOs = ObjectMapperUtils.mapAll(userRepository.findAll(), UserDTO.class);
@@ -85,13 +93,13 @@ public class UserService implements UserDetailsService {
     }
 
     /*
-    Vind een gebruiker door middel van een gebruikersId
+     * Vind een gebruiker door middel van een gebruikersId
      */
-    public UserDTO findUser (Long id) {
+    public UserDTO findUser(Long id) {
         UserDTO userDTO = null;
         Optional<User> user = userRepository.findById(id);
 
-        if (user.isPresent()){
+        if (user.isPresent()) {
             userDTO = ObjectMapperUtils.map(user.get(), UserDTO.class);
             userDTO.setPassword(null);
         }
@@ -100,13 +108,13 @@ public class UserService implements UserDetailsService {
     }
 
     /*
-    Vind een gebruiker door middel van het unieke email address
+     * Vind een gebruiker door middel van het unieke email address
      */
-    public UserDTO findUserByEmailAddress (String emailAddress){
+    public UserDTO findUserByEmailAddress(String emailAddress) {
         Optional<User> user = userRepository.findByEmailAddress(emailAddress);
         UserDTO userDTO = null;
 
-        if(user.isPresent()){
+        if (user.isPresent()) {
             userDTO = ObjectMapperUtils.map(user.get(), UserDTO.class);
         }
 
@@ -118,13 +126,13 @@ public class UserService implements UserDetailsService {
     }
 
     /*
-    Vind een gebruiker door middel van het unieke username
+     * Vind een gebruiker door middel van het unieke username
      */
-    public UserDTO findUserByUsername (String username){
+    public UserDTO findUserByUsername(String username) {
         Optional<User> user = userRepository.findByUsername(username);
         UserDTO userDTO = null;
 
-        if(user.isPresent()){
+        if (user.isPresent()) {
             userDTO = ObjectMapperUtils.map(user.get(), UserDTO.class);
         }
 
@@ -136,11 +144,13 @@ public class UserService implements UserDetailsService {
     }
 
     /*
-    Veranderd een bestaande gebruiker naar de nieuwe gegevens, via de gebruikersId
+     * Veranderd een bestaande gebruiker naar de nieuwe gegevens, via de
+     * gebruikersId
      */
     public UserDTO updateUser(UserDTO userDTO) throws NotFoundException, BadRequestException {
         Optional<User> userOptional = userRepository.findById(userDTO.getId());
-        //Kijk of de gebruiker die aangepast moet worden, wel bestaat, om te voorkomen dat hier fouten in ontstaan
+        // Kijk of de gebruiker die aangepast moet worden, wel bestaat, om te voorkomen
+        // dat hier fouten in ontstaan
         if (userOptional.isEmpty()) {
             throw new NotFoundException(String.format("User with id: '%d' not found.", userDTO.getId()));
         }
@@ -154,12 +164,14 @@ public class UserService implements UserDetailsService {
         User user = ObjectMapperUtils.map(userDTO, User.class);
         UserDTO savedUser;
 
-        //Probeer de gebruiker te updaten, als de email als bestaat zal er een error geworpen worden, aangezien deze uniek moet zijn.
+        // Probeer de gebruiker te updaten, als de email als bestaat zal er een error
+        // geworpen worden, aangezien deze uniek moet zijn.
         try {
             savedUser = ObjectMapperUtils.map(userRepository.save(user), UserDTO.class);
             savedUser.setPassword("");
         } catch (Exception e) {
-            throw new BadRequestException(String.format("There already exists an user with the following email address: '%s'.", userDTO.getEmailAddress()));
+            throw new BadRequestException(String.format(
+                    "There already exists an user with the following email address: '%s'.", userDTO.getEmailAddress()));
         }
 
         return savedUser;
@@ -180,12 +192,12 @@ public class UserService implements UserDetailsService {
     }
 
     /*
-    verwijder een gebruiker als deze bestaat
+     * verwijder een gebruiker als deze bestaat
      */
     public boolean deleteUser(UserDTO userDTO) throws NotFoundException {
         Optional<User> userOptional = userRepository.findById(userDTO.getId());
 
-        //kijk of een gebruiker bestaat voordat we deze willen verwijderen
+        // kijk of een gebruiker bestaat voordat we deze willen verwijderen
         if (userOptional.isEmpty()) {
             throw new NotFoundException(String.format("User with id: '%d' not found.", userDTO.getId()));
         }
@@ -197,12 +209,12 @@ public class UserService implements UserDetailsService {
     }
 
     /*
-    Laad gebruiker door middel van een username
+     * Laad gebruiker door middel van een username
      */
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userOptional = userRepository.findByUsername(username);
 
-        if (userOptional.isEmpty()){
+        if (userOptional.isEmpty()) {
             throw new UsernameNotFoundException(String.format("User with username: '%s' not found.", username));
         }
 
@@ -211,7 +223,7 @@ public class UserService implements UserDetailsService {
 
         if (user.getRoles() != null) {
             for (Role role : user.getRoles()) {
-                roles.add(new SimpleGrantedAuthority(role.name()));
+                roles.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
             }
         }
 
@@ -219,13 +231,14 @@ public class UserService implements UserDetailsService {
     }
 
     /*
-    Laad gebruiker door middel van een emailadres
+     * Laad gebruiker door middel van een emailadres
      */
     public UserDetails loadUserByEmailAddress(String emailAddress) throws UsernameNotFoundException {
         Optional<User> userOptional = userRepository.findByEmailAddress(emailAddress);
 
-        if (userOptional.isEmpty()){
-            throw new UsernameNotFoundException(String.format("User with email address: '%s' not found.", emailAddress));
+        if (userOptional.isEmpty()) {
+            throw new UsernameNotFoundException(
+                    String.format("User with email address: '%s' not found.", emailAddress));
         }
 
         User user = userOptional.get();
@@ -233,7 +246,7 @@ public class UserService implements UserDetailsService {
 
         if (user.getRoles() != null) {
             for (Role role : user.getRoles()) {
-                roles.add(new SimpleGrantedAuthority(role.name()));
+                roles.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
             }
         }
 

@@ -25,7 +25,8 @@ public class DatabaseInitializer {
 
     @PostConstruct
     public void init() {
-        // Controleer of er al gebruikers zijn, als er geen gebruikers zijn, maak dan een ADMIN-gebruiker aan
+        // Controleer of er al gebruikers zijn, als er geen gebruikers zijn, maak dan
+        // een ADMIN-gebruiker aan
         // TODO: implement a better default credentials system
         // if (userRepository.count() == 0) {
         if (userRepository.findByUsername(ADMIN_USERNAME).isPresent())

@@ -63,7 +63,25 @@ public class UserController {
     @PostMapping("/")
     @PreAuthorize("hasRole('ADMIN')")
     public UserDTO createUser(@RequestBody CreateUserRequestDTO createUserRequestDTO) {
-        return userService.createUser(ObjectMapperUtils.map(createUserRequestDTO, UserDTO.class));
+        UserDTO userDTO = new UserDTO(
+                createUserRequestDTO.username,
+                createUserRequestDTO.emailAddress,
+                createUserRequestDTO.password);
+
+        // Convert string roles to Role enums
+        if (createUserRequestDTO.roles != null) {
+            java.util.List<com.gamechane.backend.security.user.domain.Role> roleList = new java.util.ArrayList<>();
+            for (String roleStr : createUserRequestDTO.roles) {
+                try {
+                    roleList.add(com.gamechane.backend.security.user.domain.Role.valueOf(roleStr));
+                } catch (IllegalArgumentException e) {
+                    // Invalid role, skip it
+                }
+            }
+            userDTO.setRoles(roleList);
+        }
+
+        return userService.createUser(userDTO);
     }
 
     @PutMapping("/")
@@ -73,7 +91,7 @@ public class UserController {
     }
 
     @PatchMapping("/password")
-    @RolesAllowed({"ADMIN", "GAME_MASTER_PREMIUM", "GAME_MASTER_FREE", "STUDENT"})
+    @RolesAllowed({ "ADMIN", "GAME_MASTER_PREMIUM", "GAME_MASTER_FREE", "STUDENT" })
     public boolean editPassword(@RequestBody EditPasswordRequestDTO editPasswordRequestDTO) {
         String username = editPasswordRequestDTO.username;
         String currentPassword = editPasswordRequestDTO.currentPassword;

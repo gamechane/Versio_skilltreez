@@ -75,10 +75,11 @@
     position: absolute;
     flex-direction: column;
     width: inherit;
-    z-index: 1;
+    z-index: 100;
     border-radius: 2px;
     border: 1px solid var(--light-gray);
     border-top: 0;
+    background-color: var(--background);
     /* :D */
     transform: translateX(-1px);
   }
