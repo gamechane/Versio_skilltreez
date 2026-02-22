@@ -5,6 +5,8 @@ Een platform voor docenten om educatieve spellen te maken die door leerlingen ge
 
 Alle documentatie staat in de directory `/documentatie`, daarnaast zijn de wireframes beschikbaar via [Figma](https://www.figma.com/file/sgcCBa2xb31MIq3hpmAw4h/UI-SkillTreez?type=design&node-id=0-1).
 
+Actuele overdrachtsaanvulling: `documentatie/OVERDRACHT_UPDATE_2026-02-22.md`.
+
 # Installatie + Troubleshooting
 Hier wordt het process laten zien van het clonen van de remote repository tot het draaien van de front-end, back-end en de database
 
