@@ -3,15 +3,10 @@
 We hebben de deployment pipeline werkend gekregen. De volgende sessie focust op het volledig operationeel maken van de applicatie (functionaliteiten).
 
 ## 1. Admin Functionaliteit Onderzoeken
-*   **Probleem**: Inloggen met `admin@example.com` werkt, maar stuurt door naar `/dashboard`. Er lijkt geen specifieke admin-omgeving zichtbaar.
-*   **Hypothese**:
-    *   Mogelijk is 'Admin' geen aparte pagina, maar een rol die extra knoppen op het dashboard toont.
-    *   OF: De admin-functionaliteit zit in een fysiek gescheiden applicatie (andere repo op GitHub?).
-    *   OF: De database seed (`DataInitializer`) heeft de admin-rol niet goed toegekend.
-*   **Actie**:
-    *   Check GitHub organisatie `gamechane` op andere repo's (bijv. `admin` of `gamemaster`) en kijk of die relevant zijn.
-    *   Lees oude overdrachtsdocumenten door op zoek naar "Admin instructies".
-    *   Maak eventueel zelf een eenvoudige "User Management" pagina om nieuwe docenten aan te kunnen maken.
+*   **Status**: ✓ **Opgelost**. Het is mogelijk in te loggen via Admin (rol "Docent" te kiezen in het dropdown menu) met `admin@example.com` en `*2#!4a5N7ki@K%Ky&4Vt`. (Dit inlogaccount wordt automatisch gecreëerd door de backend).
+*   **Actie**: 
+    *   Test via het Dashboard en andere Views in de UI of specifieke CRUD functionaliteit rond docenten (User Management) klopt voor dit account.
+    *   Lees overdrachtsdocumenten nog wel even door voor meer context qua game master settings indien aanwezig.
 
 ## 2. Applicatie Volledig Testen
 *   **Database**: Lokaal de database goed opzetten zodat alles werkt (nu crasht de backend soms nog omdat DB ontbreekt).

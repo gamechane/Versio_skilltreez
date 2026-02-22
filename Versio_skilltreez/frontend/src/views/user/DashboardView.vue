@@ -63,6 +63,10 @@ const dashboardCards = [
 const token = DataManager.token.get();
 let role = JwtUtils.getRole(token);
 
+if (role.startsWith("ROLE_")) {
+  role = role.substring(5);
+}
+
 if (JwtUtils.isGameMaster(token)) {
   role = "GAME_MASTER";
 }

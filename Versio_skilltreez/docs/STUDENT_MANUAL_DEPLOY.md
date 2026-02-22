@@ -20,8 +20,11 @@ Je kunt live zien of je update gelukt is:
     *   ✅ **Groen Vinkje**: Gelukt! Je wijziging staat live op [skilltreez.netwerkspel.nl](https://skilltreez.netwerkspel.nl).
     *   ❌ **Rood Kruisje**: Mislukt. Klik erop om te zien wat er fout ging (vaak een compile error in je code).
 
-## Server Info (Alleen voor Docenten)
+## Server Info & Inloggen (Alleen voor Docenten)
 *   **URL**: [https://skilltreez.netwerkspel.nl](https://skilltreez.netwerkspel.nl)
+*   **Aanmelden als Admin**: Selecteer "Docent" bij inloggen en gebruik:
+    *   **Gebruiker:** `admin@example.com`
+    *   **Wachtwoord:** `*2#!4a5N7ki@K%Ky&4Vt`
 *   **Map op server**: `/opt/skilltreez/source/Versio_skilltreez`
 *   **Logs bekijken**:
     ```bash
