@@ -1,0 +1,36 @@
+[Unit]
+Description=Gamechane Application
+After=postgresql.service network.target
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=martijn
+Group=martijn
+WorkingDirectory=/var/www/gamechane
+
+# Environment variables - Load from .env file
+EnvironmentFile=/var/www/gamechane/.env
+
+# Java executable
+ExecStart=/usr/bin/java -jar /var/www/gamechane/backend/target/skilltreez-1.0.jar
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=gamechane
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+
+# Resource limits (optional, adjust as needed)
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+

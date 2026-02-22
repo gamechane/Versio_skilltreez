@@ -1,0 +1,16 @@
+name: Gamechane-actions
+
+on: [deployment, push, workflow_dispatch]
+
+env:
+  UNSPLASH_ACCESS_KEY: ${{ secrets.VUE_APP_UNSPLASH_ACCESS_KEY }}
+
+jobs:
+  create_env_file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: create .env file
+        run: |
+          touch .env
+          echo VUE_APP_UNSPLASH_ACCESS_KEY="$UNSPLASH_ACCESS_KEY" >> .env
+          cat .env
