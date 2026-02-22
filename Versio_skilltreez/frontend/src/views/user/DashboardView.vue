@@ -90,21 +90,31 @@ if (JwtUtils.isGameMaster(token)) {
 <style scoped>
 .container {
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
-  height: 60%;
+  min-height: calc(100vh - 100px);
+  padding: 40px 20px;
   flex-direction: column;
-  gap: 30px;
+  gap: 40px;
+  box-sizing: border-box;
 }
 
 .logo {
-  height: 50px;
+  height: 80px;
   object-fit: contain;
+  margin-bottom: 10px;
 }
 
 .icons {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 40px;
+}
+
+@media (max-width: 600px) {
+  .icons {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 </style>

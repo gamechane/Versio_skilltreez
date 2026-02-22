@@ -78,26 +78,36 @@ function navigate() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100px;
-  height: 150px;
-  border-radius: 10%;
-  background-color: var(--primary-light);
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
+  background-color: var(--primary-light, #A2E3A1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Soft, premium shadow */
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .dashboardCard:hover {
-  background-color: lightblue;
+  background-color: var(--secondary, #96e996);
+  transform: translateY(-4px); /* Slight lift on interaction */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Deeper shadow on hover */
 }
 
 .icon {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 10px;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 20px;
+  object-fit: contain;
 }
 
 .text {
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--foreground, #000227);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
 }
 </style>
